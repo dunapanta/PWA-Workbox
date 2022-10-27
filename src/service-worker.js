@@ -83,6 +83,19 @@ self.addEventListener("install", async (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  //console.log("fetch event", event.request.url);
+  if (event.request.url !== "http://localhost:4000/api/auth/renew") return;
 
-  console.log("fetch event", event.request.url);
-})
+  const resp = fetch(event.request).then((response) => {
+    //Guardar en cache la respuesta
+    caches.open("cache-dynamic").then((cache) => {
+      cache.put(event.request, response);
+    })
+    return response.clone();
+  }).catch((err) => {
+    console.log("offline response");
+    return caches.match(event.request);
+  })
+
+  event.respondWith(resp);
+});

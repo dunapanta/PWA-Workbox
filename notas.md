@@ -55,3 +55,24 @@ self.addEventListener("fetch", (event) => {
   console.log("fetch event", event.request.url);
 })
 ```
+### Network first with cache fallback
+- Ejemplo vert si jwt es valido para mantenerlo en la pantalla
+```
+self.addEventListener("fetch", (event) => {
+  //console.log("fetch event", event.request.url);
+  if (event.request.url !== "http://localhost:4000/api/auth/renew") return;
+
+  const resp = fetch(event.request).then((response) => {
+    //Guardar en cache la respuesta
+    caches.open("cache-dynamic").then((cache) => {
+      cache.put(event.request, response);
+    })
+    return response.clone();
+  }).catch((err) => {
+    console.log("offline response");
+    return caches.match(event.request);
+  })
+
+  event.respondWith(resp);
+});
+```
