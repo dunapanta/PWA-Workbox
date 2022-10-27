@@ -29,3 +29,22 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 // Learn more about service workers: https://cra.link/PWA
 serviceWorkerRegistration.register();
 ```
+
+## Metodo Manual
+```
+self.addEventListener('install', (event) => {
+  console.log('Service Worker installing.');
+})
+```
+- Guardar en cache
+```
+self.addEventListener("install", async (event) => {
+  const cache = await caches.open("v1");
+
+  await cache.addAll([
+    "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css",
+    "/favicon.ico",
+  ]);
+});
+```
