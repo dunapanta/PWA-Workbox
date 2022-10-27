@@ -48,3 +48,10 @@ self.addEventListener("install", async (event) => {
   ]);
 });
 ```
+- Interceptar peticiones
+```
+self.addEventListener("fetch", (event) => {
+
+  console.log("fetch event", event.request.url);
+})
+```
