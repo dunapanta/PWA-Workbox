@@ -89,3 +89,18 @@ self.addEventListener("fetch", (event) => {
       }
 </script>
 ```
+
+
+## Workbox SW Manual
+- Creo `sw-template.js`
+```
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js')
+
+workbox.precaching.precacheAndRoute(self.__WB_MANIFEST)
+```
+- agrego en `workbox.config.js`
+```
+swSrc: 'src/sw-template.js',
+```
+- Ejecuto `workbox injectManifest`
+
