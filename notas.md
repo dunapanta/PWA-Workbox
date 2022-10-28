@@ -76,3 +76,16 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(resp);
 });
 ```
+
+## Workbox CLI
+- Service Worker solo se puede instalar en el build de produccion
+- en `index.html`
+```
+<script>
+      const isProduction = "%NODE_ENV%" === "production";
+
+      if (isProduction && "serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js");
+      }
+</script>
+```
